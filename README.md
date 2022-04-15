@@ -1,12 +1,10 @@
 # Liquid - Lab1 - Variant 4
 
-## group name and list of group members
-
-  **group name**
+## group name
 
     Liquid
 
-  **group member**
+## group member
 
     Zhou xun:
       id: 212320010
@@ -34,10 +32,10 @@
 
 ## Changelog
 
-  - 15.04.2022 - 1
-    - Update README and the Python code style
-  - 14.04.2022 - 0
-    - Initial
+- 15.04.2022 - 1
+  - Update README and the Python code style
+- 14.04.2022 - 0
+  - Initial
 
 ## Design notes
 
