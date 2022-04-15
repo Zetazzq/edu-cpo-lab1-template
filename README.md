@@ -1,12 +1,12 @@
-# edu-cpo-lab1-template  
-CPO Lab1  
-## group name and list of group members  
-   **group name:Liquid**  
-    group member :  
-   **Zhou xun:**  
-       id:212320010  
-       email: 212320010@hdu.edu.cn  
-   **Zuo Ziqian:**    
+# edu-cpo-lab1-template
+CPO Lab1
+## group name and list of group members
+   **group name:Liquid**
+    group member :
+   **Zhou xun:**
+       id:212320010 
+       email: 212320010@hdu.edu.cn
+   **Zuo Ziqian:**
        id:212320008  
        email: zuoziqian@hdu.edu.cn  
 ## Variant 4  
