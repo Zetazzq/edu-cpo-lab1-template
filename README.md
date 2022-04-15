@@ -2,17 +2,17 @@
 
 ## group name
 
-Liquid
+  Liquid
 
 ## group member
 
-Zhou xun:
-  id: 212320010
-  email: 212320010@hdu.edu.cn
+  Zhou xun:
+    id: 212320010
+    email: 212320010@hdu.edu.cn
 
-Zuo Ziqian:
-  id: 212320008
-  email: zuoziqian@hdu.edu.cn
+  Zuo Ziqian:
+    id: 212320008
+    email: zuoziqian@hdu.edu.cn
 
 ## Variant 4
 
@@ -45,10 +45,12 @@ Zuo Ziqian:
   operations cannot be implemented, I don't know how to
   solve this problem.
 
-  Advantages of unittest:  
+  Advantages of unittest:
+
   Unnitest is more compatible
 
-  Disadvantages of unittest:  
+  Disadvantages of unittest:
+
   More limited
 
 ## Conclusion
