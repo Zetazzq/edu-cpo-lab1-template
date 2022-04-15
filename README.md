@@ -2,9 +2,10 @@
 
 ## group name and list of group members
 
-    group name:Liquid
-  **group member**
+  **group name**
+    Liquid
 
+  **group member**
     Zhou xun:
       id: 212320010
       email: 212320010@hdu.edu.cn
@@ -39,14 +40,15 @@
 ## Design notes
 
   Implementation restrictions:
-  According to my understanding, the key and value of the set should be the same value, 
-  but still must enter two,otherwise some operations cannot be implemented,
-  I don't know how to solve this problem.
+  According to my understanding, the key and value of the set should 
+  be the same value, but still must enter two,otherwise some 
+  operations cannot be implemented, I don't know how to 
+  solve this problem.
 
   Advantages of unittest:
   Unnitest is more compatible
 
-  DisAdvantages of unittest:
+  Disadvantages of unittest:
   More limited
 
 ## Conclusion
