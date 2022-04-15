@@ -8,8 +8,10 @@ class Node(object):
         self.value = value
         self.next = next
 
+
 class MyHashSet(object):
     init = object()
+
     def __init__(self, dict=None, length=61):
         if dict is not None:
             self.hashSetFromDict(self, dict)
@@ -20,7 +22,7 @@ class MyHashSet(object):
         self.index = 0
 
     def hash(self, key):
-        hash_value = key % self.length  
+        hash_value = key % self.length
         return hash_value
 
     def add(self, key, value):
@@ -31,7 +33,7 @@ class MyHashSet(object):
             self.keyList.append(key)
         else:
             head = self.data[hash_value]
-            while head.next != None:
+            while head.next is not None:
                 if head.key == key:
                     head.value = value
                     return
@@ -65,13 +67,13 @@ class MyHashSet(object):
             self.keyList.remove(key)
             return True
 
-    def isNumbers(self, key)-> bool:
+    def isNumbers(self, key) -> bool:
         return key in self.keyList
 
     def get(self, key):
         dict = self.hashSetToDict()
         key = dict[key]
-        return key 
+        return key
 
     def size(self):
         size = len(self.keyList)
@@ -92,7 +94,7 @@ class MyHashSet(object):
         for i in range(self.length):
             if self.data[i] != self.init:
                 head = self.data[i]
-                while head != None:
+                while head is not None:
                     dict[head.key] = head.value
                     head = head.next
         return dict
@@ -102,7 +104,7 @@ class MyHashSet(object):
         list = []
         for value in dict:
             list.append(value)
-        return  list
+        return list
 
     def findEven(self):
         dict = self.hashSetToDict()
@@ -110,7 +112,7 @@ class MyHashSet(object):
         for value in dict.items():
             if value % 2 == 0:
                 list.append(value)
-        return 
+        return
 
     def filterEven(self):
         list = self.hashSatToList()
@@ -130,19 +132,19 @@ class MyHashSet(object):
         if a is None:
             if b is None:
                 return 0
-            else: 
+            else:
                 for key in b.keyList:
-                    self.add(key,key)
+                    self.add(key, key)
         if b is None:
             if a is None:
                 return 0
             else:
                 for key in a.keyList:
-                    self.add(key,key)
+                    self.add(key, key)
         for key in a.keyList:
-            self.add(key,key)
+            self.add(key, key)
         for key in b.keyList:
-            self.add(key,key)
+            self.add(key, key)
         return self
 
     def empty(self):
