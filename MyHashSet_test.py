@@ -1,3 +1,4 @@
+from turtle import back
 import unittest
 from hypothesis import given, strategies
 from MyHashSet import *
@@ -32,17 +33,17 @@ class TestMyHashSetMethods(unittest.TestCase):
         hashset.add(48, 36)
         self.assertEqual(hashset.size(), 2)
 
-    def test_filtereven(self):
-        hashmap = MyHashSet()
-        hashmap.listToHashSet([1, 6, 3, 12])
-        self.assertEqual(hashmap.filterEven(), [1, 3])
-
     def test_hashSetToDict(self):
         hashset = MyHashSet()
         hashset.add(1, 1)
         hashset.add(2, 2)
         hashset.add(3, 3)
         self.assertEqual(hashset.hashSetToDict(), {1: 1, 2: 2, 3: 3})
+
+    def test_filtereven(self):
+        hashmap = MyHashSet()
+        hashmap.listToHashSet([1, 6, 3, 12])
+        self.assertEqual(hashmap.filterEven(), [1, 3])
 
     def test_reduce(self):
         hashset = MyHashSet()
@@ -51,7 +52,19 @@ class TestMyHashSetMethods(unittest.TestCase):
         hashset.add(9, 9)
         self.assertEqual(hashset.reduce(lambda a, b: a * b, 1), 54)
 
-    def test_concat(self):
+    def test_iter(self):
+        hashset = MyHashSet()
+        hashset.add(1, 1)
+        hashset.add(2, 2)
+        hashset.add(3, 3)
+        temp = {}
+        for e in hashset:
+            temp[e.key] = e.value
+        self.assertEqual(hashset.hashSetToDict(), temp)
+        i = iter(hashset)
+        self.assertEqual(next(i).value, 1)
+
+    def test_associativity_1(self):
         hashset_a = MyHashSet()
         hashset_a.add(1, 1)
         hashset_a.add(2, 2)
@@ -71,15 +84,22 @@ class TestMyHashSetMethods(unittest.TestCase):
         bc_a.concat(bc, hashset_a)
         self.assertEqual(ab_c.hashSetToDict(), bc_a.hashSetToDict())
 
-    # @given(strategies.lists(strategies.integers()))
-    # def test_Identity(self, temp):
-    #     hash1 = MyHashSet()
-    #     hash2 = MyHashSet()
-    #     hash1.listToHashSet(temp)
-    #     self.assertEqual(hash1.concat(hash2.empty(), hash1), hash1)
-    #     self.assertEqual(hash1.concat(hash1, hash2.empty()), hash1)
+    @given(a=strategies.lists(strategies.integers()),
+           b=strategies.lists(strategies.integers()),
+           c=strategies.lists(strategies.integers()))
+    def test_associativity_2(self, a, b, c):
+        hashmap = MyHashSet()
+        hashset_a = MyHashSet()
+        hashset_b = MyHashSet()
+        hashset_c = MyHashSet()
+        hashset_a.listToHashSet(a)
+        hashset_b.listToHashSet(b)
+        hashset_c.listToHashSet(c)
+        ab = hashmap.concat(hashset_a, hashset_b)
+        ab_c = hashmap.concat(ab, hashset_c)
+        bc = hashmap.concat(hashset_b, hashset_c)
+        bc_a = hashmap.concat(bc, hashset_a)
+        self.assertEqual(ab_c, bc_a)
 
-
-if __name__ == '__main__':
-
-    unittest.main(verbosity=2)
+    if __name__ == '__main__':
+        unittest.main(verbosity=2)

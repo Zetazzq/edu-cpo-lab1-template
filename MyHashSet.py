@@ -15,7 +15,6 @@ class MyHashSet(object):
     def __init__(self, dict=None, length=61):
         if dict is not None:
             self.hashSetFromDict(self, dict)
-
         self.keyList = []
         self.data = [self.init for i in range(length)]
         self.length = length
@@ -130,22 +129,19 @@ class MyHashSet(object):
 
     def concat(self, a, b):
         if a is None:
-            if b is None:
-                return 0
-            else:
-                for key in b.keyList:
-                    self.add(key, key)
+            return b
         if b is None:
-            if a is None:
-                return 0
-            else:
-                for key in a.keyList:
-                    self.add(key, key)
+            return a
         for key in a.keyList:
-            self.add(key, key)
+            value = a.get(key)
+            self.add(key, value)
         for key in b.keyList:
-            self.add(key, key)
+            value = b.get(key)
+            self.add(key, value)
         return self
 
-    def empty(self):
-        return None
+    def __iter__(self):
+        iter_list = []
+        for key in self.keyList:
+            iter_list.append(Node(key, self.get(key)))
+        return iter(iter_list)
