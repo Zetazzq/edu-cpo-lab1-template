@@ -33,8 +33,10 @@ Zuo Ziqian Completed the test_mutable.py
 
 ## Changelog
 
+- 16.04.2022 - 2
+  - Add iterator function by Zhou
 - 15.04.2022 - 1
-  - Update README and the Python code style
+  - Update README and the Python code style by Zuo and Zhou
 - 14.04.2022 - 0
   - Initial
 
