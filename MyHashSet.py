@@ -1,7 +1,3 @@
-from multiprocessing.sharedctypes import Value
-from tempfile import tempdir
-
-
 class Node(object):
     def __init__(self, key=None, value=None, next=None):
         self.key = key
@@ -13,8 +9,6 @@ class MyHashSet(object):
     init = object()
 
     def __init__(self, dict=None, length=61):
-        if dict is not None:
-            self.hashSetFromDict(self, dict)
         self.keyList = []
         self.data = [self.init for i in range(length)]
         self.length = length
@@ -98,28 +92,29 @@ class MyHashSet(object):
                     head = head.next
         return dict
 
-    def hashSatToList(self):
+    def hashSetToList(self):
         dict = self.hashSetToDict()
         list = []
         for value in dict:
             list.append(value)
         return list
 
-    def findEven(self):
-        dict = self.hashSetToDict()
-        list = []
-        for value in dict.items():
-            if value % 2 == 0:
-                list.append(value)
-        return
+    def filter(self, function):
+        for key in self.keyList:
+            if (function(key) != 1):
+                self.remove(key)
+        return self
 
-    def filterEven(self):
-        list = self.hashSatToList()
-        temp = []
-        for value in list:
-            if value % 2 != 0:
-                temp.append(value)
-        return temp
+    def _empty(self):
+        return None
+
+    def map(self, function):
+        list_in = self.hashSetToList()
+        list_out = []
+        for value in list_in:
+            value = function(value)
+            list_out.append(value)
+        return list_out
 
     def reduce(self, func, init_state):
         out = init_state
@@ -127,18 +122,15 @@ class MyHashSet(object):
             out = func(out, key)
         return out
 
-    def concat(self, a, b):
-        if a is None:
-            return b
-        if b is None:
-            return a
-        for key in a.keyList:
-            value = a.get(key)
-            self.add(key, value)
-        for key in b.keyList:
-            value = b.get(key)
-            self.add(key, value)
-        return self
+    def concat(set1, set2):
+        if set1 is None:
+            return set2
+        elif set2 is MyHashSet:
+            for key in set2.keyList:
+                value = set2.get(key)
+                set1.add(key, value)
+                return set1
+        return set1
 
     def __iter__(self):
         iter_list = []

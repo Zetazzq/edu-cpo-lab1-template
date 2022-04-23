@@ -1,4 +1,6 @@
-from turtle import back
+from ast import List
+from inspect import ismethoddescriptor
+from queue import Empty
 import unittest
 from hypothesis import given, strategies
 from MyHashSet import *
@@ -26,6 +28,16 @@ class TestMyHashSetMethods(unittest.TestCase):
         hashset.remove(36)
         self.assertEqual(hashset.isNumbers(36), 0)
 
+    def test_get(self):
+        hashmap = MyHashSet()
+        hashmap.add(1, 1)
+        self.assertEqual(hashmap.get(1), 1)
+
+    def test_isNumbers(self):
+        hashmap = MyHashSet()
+        hashmap.add(1, 1)
+        self.assertEqual(hashmap.isNumbers(1), 1)
+
     def test_size(self):
         hashset = MyHashSet()
         self.assertEqual(hashset.size(), 0)
@@ -40,10 +52,35 @@ class TestMyHashSetMethods(unittest.TestCase):
         hashset.add(3, 3)
         self.assertEqual(hashset.hashSetToDict(), {1: 1, 2: 2, 3: 3})
 
-    def test_filtereven(self):
-        hashmap = MyHashSet()
-        hashmap.listToHashSet([1, 6, 3, 12])
-        self.assertEqual(hashmap.filterEven(), [1, 3])
+    def test_hashSetToList(self):
+        hashset = MyHashSet()
+        hashset.add(1, 1)
+        hashset.add(2, 2)
+        hashset.add(3, 3)
+        hashset.add(4, 4)
+        self.assertEqual(hashset.hashSetToList(), [1, 2, 3, 4])
+
+    def test_hashsetfromList(self):
+        hashset = MyHashSet()
+        list = [1, 2, 3, 4]
+        hashset.listToHashSet(list)
+        self.assertEqual(hashset.isNumbers(3), 1)
+
+    def test_filter(self):
+        hashset = MyHashSet()
+        hashset.add(1, 1)
+        hashset.add(2, 2)
+        hashset.add(3, 3)
+        hashset.add(4, 4)
+        hashset.filter(lambda x: x % 2 == 0)
+        self.assertEqual(hashset.hashSetToList(), [2, 4])
+
+    def test_map(self):
+        hashset = MyHashSet()
+        hashset.add(1, 1)
+        hashset.add(2, 2)
+        hashset.add(3, 3)
+        self.assertEqual(hashset.map(lambda x: x ** 3), [1, 8, 27])
 
     def test_reduce(self):
         hashset = MyHashSet()
@@ -74,32 +111,48 @@ class TestMyHashSetMethods(unittest.TestCase):
         hashset_c = MyHashSet()
         hashset_c.add(5, 5)
         hashset_c.add(6, 6)
-        ab = MyHashSet()
-        ab_c = MyHashSet()
-        bc = MyHashSet()
-        bc_a = MyHashSet()
-        ab.concat(hashset_a, hashset_b)
-        ab_c.concat(ab, hashset_c)
-        bc.concat(hashset_b, hashset_c)
-        bc_a.concat(bc, hashset_a)
-        self.assertEqual(ab_c.hashSetToDict(), bc_a.hashSetToDict())
+        hashset_A = hashset_a
+        hashset_B = hashset_b
+        hashset_C = hashset_c
+        hashset_a.concat(hashset_b)
+        hashset_a.concat(hashset_c)
+        hashset_A.concat(hashset_C)
+        hashset_A.concat(hashset_B)
+        self.assertEqual(hashset_a, hashset_A)
 
     @given(a=strategies.lists(strategies.integers()),
            b=strategies.lists(strategies.integers()),
            c=strategies.lists(strategies.integers()))
     def test_associativity_2(self, a, b, c):
-        hashmap = MyHashSet()
         hashset_a = MyHashSet()
         hashset_b = MyHashSet()
         hashset_c = MyHashSet()
         hashset_a.listToHashSet(a)
         hashset_b.listToHashSet(b)
         hashset_c.listToHashSet(c)
-        ab = hashmap.concat(hashset_a, hashset_b)
-        ab_c = hashmap.concat(ab, hashset_c)
-        bc = hashmap.concat(hashset_b, hashset_c)
-        bc_a = hashmap.concat(bc, hashset_a)
-        self.assertEqual(ab_c, bc_a)
+        hashset_A = hashset_a
+        hashset_B = hashset_b
+        hashset_C = hashset_c
+        hashset_a.concat(hashset_b)
+        hashset_a.concat(hashset_c)
+        hashset_A.concat(hashset_C)
+        hashset_A.concat(hashset_B)
+        self.assertEqual(hashset_a, hashset_A)
 
-    if __name__ == '__main__':
-        unittest.main(verbosity=2)
+    @given(list=strategies.lists(strategies.integers()))
+    def test_identity(self, list):
+        hashset_a = MyHashSet()
+        hashset_b = MyHashSet()
+        hashset_a.listToHashSet(list)
+        self.assertEqual(hashset_a.concat(hashset_b._empty), hashset_a)
+
+    @given(list=strategies.lists(strategies.integers()))
+    def test_identity(self, list):
+        hashset_a = MyHashSet()
+        hashset_b = MyHashSet()
+        hashset_a.listToHashSet(list)
+        self.assertEqual(hashset_a.concat(hashset_b._empty), hashset_a)
+
+
+if __name__ == '__main__':
+    unittest.main(verbosity=2)
