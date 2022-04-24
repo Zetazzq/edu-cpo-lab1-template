@@ -136,18 +136,11 @@ class TestMyHashSetMethods(unittest.TestCase):
         hashset_A.concat(hashset_B)
         self.assertEqual(hashset_a, hashset_A)
 
-    @given(list=strategies.lists(strategies.integers()))
-    def test_identity(self, list):
+    @given(_list=strategies.lists(strategies.integers()))
+    def test_identity(self, _list):
         hashset_a = MyHashSet()
         hashset_b = MyHashSet()
-        hashset_a.list_to_hashset(list)
-        self.assertEqual(hashset_a.concat(hashset_b._empty), hashset_a)
-
-    @given(list=strategies.lists(strategies.integers()))
-    def test_identity(self, list):
-        hashset_a = MyHashSet()
-        hashset_b = MyHashSet()
-        hashset_a.list_to_hashset(list)
+        hashset_a.list_to_hashset(_list)
         self.assertEqual(hashset_a.concat(hashset_b._empty), hashset_a)
 
 
