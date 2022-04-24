@@ -1,16 +1,24 @@
+import warnings
+warnings.filterwarnings("ignore")
+
+
 class Node(object):
-    def __init__(self, key=None, value=None, next=None):
+    def __init__(self, key=None, value=None, _next=None):
         self.key = key
         self.value = value
-        self.next = next
+        self.next = _next
+
+
+def _empty():
+    return None
 
 
 class MyHashSet(object):
     init = object()
 
-    def __init__(self, dict=None, length=61):
+    def __init__(self, length=61):
         self.keyList = []
-        self.data = [self.init for i in range(length)]
+        self.data = [self.init for _ in range(length)]
         self.length = length
         self.index = 0
 
@@ -20,9 +28,9 @@ class MyHashSet(object):
 
     def add(self, key, value):
         hash_value = self.hash(key)
-        addNode = Node(key, value)
+        add_node = Node(key, value)
         if self.data[hash_value] == self.init:
-            self.data[hash_value] = addNode
+            self.data[hash_value] = add_node
             self.keyList.append(key)
         else:
             head = self.data[hash_value]
@@ -34,7 +42,7 @@ class MyHashSet(object):
             if head.key == key:
                 head.value = value
                 return
-            head.next = addNode
+            head.next = add_node
             self.keyList.append(key)
         return
 
@@ -60,11 +68,11 @@ class MyHashSet(object):
             self.keyList.remove(key)
             return True
 
-    def isNumbers(self, key) -> bool:
+    def is_numbers(self, key) -> bool:
         return key in self.keyList
 
     def get(self, key):
-        dict = self.hashSetToDict()
+        dict = self.hashset_to_dict()
         key = dict[key]
         return key
 
@@ -72,15 +80,15 @@ class MyHashSet(object):
         size = len(self.keyList)
         return size
 
-    def listToHashSet(self, list):
+    def list_to_hashset(self, list):
         for key, value in enumerate(list):
             self.add(key, value)
 
-    def dickToHashSet(self):
-        for key, value in dict.items():
+    def dick_to_hashset(self):
+        for key, value in dict.items(self):
             self.add(key, value)
 
-    def hashSetToDict(self):
+    def hashset_to_dict(self):
         dict = {}
         if len(self.keyList) == 0:
             return dict
@@ -92,8 +100,8 @@ class MyHashSet(object):
                     head = head.next
         return dict
 
-    def hashSetToList(self):
-        dict = self.hashSetToDict()
+    def hashset_to_list(self):
+        dict = self.hashset_to_dict()
         list = []
         for value in dict:
             list.append(value)
@@ -101,15 +109,12 @@ class MyHashSet(object):
 
     def filter(self, function):
         for key in self.keyList:
-            if (function(key) != 1):
+            if function(key) != 1:
                 self.remove(key)
         return self
 
-    def _empty(self):
-        return None
-
     def map(self, function):
-        list_in = self.hashSetToList()
+        list_in = self.hashset_to_list()
         list_out = []
         for value in list_in:
             value = function(value)
@@ -122,15 +127,15 @@ class MyHashSet(object):
             out = func(out, key)
         return out
 
-    def concat(set1, set2):
-        if set1 is None:
-            return set2
-        elif set2 is MyHashSet:
-            for key in set2.keyList:
-                value = set2.get(key)
-                set1.add(key, value)
-                return set1
-        return set1
+    def concat(self, set):
+        if self is None:
+            return set
+        elif set is MyHashSet:
+            for key in set.keyList:
+                value = set.get(key)
+                self.add(key, value)
+                return self
+        return self
 
     def __iter__(self):
         iter_list = []

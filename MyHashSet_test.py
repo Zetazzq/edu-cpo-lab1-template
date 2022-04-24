@@ -1,9 +1,6 @@
-from ast import List
-from inspect import ismethoddescriptor
-from queue import Empty
 import unittest
 from hypothesis import given, strategies
-from MyHashSet import *
+from MyHashSet import MyHashSet
 
 
 class TestMyHashSetMethods(unittest.TestCase):
@@ -20,13 +17,13 @@ class TestMyHashSetMethods(unittest.TestCase):
     def test_add(self):
         hashset = MyHashSet()
         hashset.add(36, 36)
-        self.assertEqual(hashset.isNumbers(36), 1)
+        self.assertEqual(hashset.is_numbers(36), 1)
 
     def test_remove(self):
         hashset = MyHashSet()
         hashset.add(36, 36)
         hashset.remove(36)
-        self.assertEqual(hashset.isNumbers(36), 0)
+        self.assertEqual(hashset.is_numbers(36), 0)
 
     def test_get(self):
         hashmap = MyHashSet()
@@ -36,7 +33,7 @@ class TestMyHashSetMethods(unittest.TestCase):
     def test_isNumbers(self):
         hashmap = MyHashSet()
         hashmap.add(1, 1)
-        self.assertEqual(hashmap.isNumbers(1), 1)
+        self.assertEqual(hashmap.is_numbers(1), 1)
 
     def test_size(self):
         hashset = MyHashSet()
@@ -50,7 +47,7 @@ class TestMyHashSetMethods(unittest.TestCase):
         hashset.add(1, 1)
         hashset.add(2, 2)
         hashset.add(3, 3)
-        self.assertEqual(hashset.hashSetToDict(), {1: 1, 2: 2, 3: 3})
+        self.assertEqual(hashset.hashset_to_dict(), {1: 1, 2: 2, 3: 3})
 
     def test_hashSetToList(self):
         hashset = MyHashSet()
@@ -58,13 +55,13 @@ class TestMyHashSetMethods(unittest.TestCase):
         hashset.add(2, 2)
         hashset.add(3, 3)
         hashset.add(4, 4)
-        self.assertEqual(hashset.hashSetToList(), [1, 2, 3, 4])
+        self.assertEqual(hashset.hashset_to_list(), [1, 2, 3, 4])
 
     def test_hashsetfromList(self):
         hashset = MyHashSet()
         list = [1, 2, 3, 4]
-        hashset.listToHashSet(list)
-        self.assertEqual(hashset.isNumbers(3), 1)
+        hashset.list_to_hashset(list)
+        self.assertEqual(hashset.is_numbers(3), 1)
 
     def test_filter(self):
         hashset = MyHashSet()
@@ -73,7 +70,7 @@ class TestMyHashSetMethods(unittest.TestCase):
         hashset.add(3, 3)
         hashset.add(4, 4)
         hashset.filter(lambda x: x % 2 == 0)
-        self.assertEqual(hashset.hashSetToList(), [2, 4])
+        self.assertEqual(hashset.hashset_to_list(), [2, 4])
 
     def test_map(self):
         hashset = MyHashSet()
@@ -97,7 +94,7 @@ class TestMyHashSetMethods(unittest.TestCase):
         temp = {}
         for e in hashset:
             temp[e.key] = e.value
-        self.assertEqual(hashset.hashSetToDict(), temp)
+        self.assertEqual(hashset.hashset_to_dict(), temp)
         i = iter(hashset)
         self.assertEqual(next(i).value, 1)
 
@@ -127,9 +124,9 @@ class TestMyHashSetMethods(unittest.TestCase):
         hashset_a = MyHashSet()
         hashset_b = MyHashSet()
         hashset_c = MyHashSet()
-        hashset_a.listToHashSet(a)
-        hashset_b.listToHashSet(b)
-        hashset_c.listToHashSet(c)
+        hashset_a.list_to_hashset(a)
+        hashset_b.list_to_hashset(b)
+        hashset_c.list_to_hashset(c)
         hashset_A = hashset_a
         hashset_B = hashset_b
         hashset_C = hashset_c
@@ -143,14 +140,14 @@ class TestMyHashSetMethods(unittest.TestCase):
     def test_identity(self, list):
         hashset_a = MyHashSet()
         hashset_b = MyHashSet()
-        hashset_a.listToHashSet(list)
+        hashset_a.list_to_hashset(list)
         self.assertEqual(hashset_a.concat(hashset_b._empty), hashset_a)
 
     @given(list=strategies.lists(strategies.integers()))
     def test_identity(self, list):
         hashset_a = MyHashSet()
         hashset_b = MyHashSet()
-        hashset_a.listToHashSet(list)
+        hashset_a.list_to_hashset(list)
         self.assertEqual(hashset_a.concat(hashset_b._empty), hashset_a)
 
 
