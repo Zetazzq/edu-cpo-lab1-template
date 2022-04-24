@@ -1,7 +1,3 @@
-import warnings
-warnings.filterwarnings("ignore")
-
-
 class Node(object):
     def __init__(self, key=None, value=None, _next=None):
         self.key = key
