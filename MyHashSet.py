@@ -9,10 +9,6 @@ class Node(object):
         self.next = _next
 
 
-def _empty():
-    return None
-
-
 class MyHashSet(object):
     init = object()
 
@@ -126,6 +122,9 @@ class MyHashSet(object):
         for key in self.keyList:
             out = func(out, key)
         return out
+
+    def _empty(self):
+        return None
 
     def concat(self, set):
         if self is None:
