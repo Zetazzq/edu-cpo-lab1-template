@@ -14,12 +14,13 @@ class MyHashSet(object):
         self.length = length
         self.index = 0
 
-    def hash(self, key):
+    def myhash(self, key):
         hash_value = key % self.length
         return hash_value
 
-    def add(self, key, value):
-        hash_value = self.hash(key)
+    def add(self, value):
+        key = value
+        hash_value = self.myhash(key)
         add_node = Node(key, value)
         if self.data[hash_value] == self.init:
             self.data[hash_value] = add_node
@@ -39,7 +40,7 @@ class MyHashSet(object):
         return
 
     def remove(self, key):
-        hash_value = self.hash(key)
+        hash_value = self.myhash(key)
         if self.data[hash_value] is self.init:
             return False
         elif self.data[hash_value].key is key:
@@ -60,80 +61,80 @@ class MyHashSet(object):
             self.keyList.remove(key)
             return True
 
-    def is_numbers(self, key) -> bool:
+    def is_member(self, key) -> bool:
         return key in self.keyList
-
-    def get(self, key):
-        dict = self.hashset_to_dict()
-        key = dict[key]
-        return key
 
     def size(self):
         size = len(self.keyList)
         return size
 
-    def list_to_hashset(self, list):
-        for key, value in enumerate(list):
-            self.add(key, value)
+    def list_to_hashset(self, lst):
+        self.__init__()
+        for value in lst:
+            self.add(value)
 
-    def dick_to_hashset(self):
-        for key, value in dict.items(self):
-            self.add(key, value)
-
-    def hashset_to_dict(self):
-        dict = {}
+    def hashset_to_list(self):
+        lst = []
         if len(self.keyList) == 0:
-            return dict
+            return lst
         for i in range(self.length):
             if self.data[i] != self.init:
                 head = self.data[i]
                 while head is not None:
-                    dict[head.key] = head.value
+                    lst.append(head.value)
                     head = head.next
-        return dict
+        lst.sort()
+        return lst
 
-    def hashset_to_list(self):
-        dict = self.hashset_to_dict()
-        list = []
-        for value in dict:
-            list.append(value)
-        return list
+    def hashset_to_nodelist(self):
+        nodelist = []
+        if len(self.keyList) == 0:
+            return nodelist
+        for i in range(self.length):
+            if self.data[i] != self.init:
+                point = self.data[i]
+                while point is not None:
+                    nodelist.append(point)
+                    point = point.next
+        return nodelist
 
-    def filter(self, function):
-        for key in self.keyList:
-            if function(key) != 1:
-                self.remove(key)
+    def myfilter(self, function):
+        lst_res = []
+        for value in self.hashset_to_list:
+            if function(value) is True:
+                lst_res.append(value)
+        return lst_res
+
+    def mymap(self, function):
+        list_src = self.hashset_to_list()
+        for i in range(len(list_src)):
+            list_src[i] = function(list_src[i])
+        self.list_to_hashset(list_src)
         return self
 
-    def map(self, function):
-        list_in = self.hashset_to_list()
-        list_out = []
-        for value in list_in:
-            value = function(value)
-            list_out.append(value)
-        return list_out
+    def myreduce(self, func, init_state):
+        res = init_state
+        it = iter(self)
+        for i in it:
+            res = func(res, i.value)
+        return res
 
-    def reduce(self, func, init_state):
-        out = init_state
-        for key in self.keyList:
-            out = func(out, key)
-        return out
+    def __eq__(self, other) -> bool:
+        if self.hashset_to_list() == other.hashset_to_list():
+            return True
+        return False
 
-    def _empty(self):
-        return None
+    def empty(self):
+        return MyHashSet()
 
-    def concat(self, set):
-        if self is None:
-            return set
-        elif set is MyHashSet:
-            for key in set.keyList:
-                value = set.get(key)
-                self.add(key, value)
-                return self
+    def concat(self, to_concat):
+        if to_concat is None:
+            return self
+        elif isinstance(to_concat, MyHashSet):
+            for key in to_concat.hashset_to_list():
+                self.add(key)
         return self
 
     def __iter__(self):
-        iter_list = []
-        for key in self.keyList:
-            iter_list.append(Node(key, self.get(key)))
+        iter_list = self.hashset_to_nodelist()
         return iter(iter_list)
