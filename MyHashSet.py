@@ -14,13 +14,13 @@ class MyHashSet(object):
         self.length = length
         self.index = 0
 
-    def myhash(self, key):
+    def hash(self, key):
         hash_value = key % self.length
         return hash_value
 
     def add(self, value):
         key = value
-        hash_value = self.myhash(key)
+        hash_value = self.hash(key)
         add_node = Node(key, value)
         if self.data[hash_value] == self.init:
             self.data[hash_value] = add_node
@@ -40,7 +40,7 @@ class MyHashSet(object):
         return
 
     def remove(self, key):
-        hash_value = self.myhash(key)
+        hash_value = self.hash(key)
         if self.data[hash_value] is self.init:
             return False
         elif self.data[hash_value].key is key:
@@ -68,12 +68,12 @@ class MyHashSet(object):
         size = len(self.keyList)
         return size
 
-    def list_to_hashset(self, lst):
+    def fromList(self, lst):
         self.__init__()
         for value in lst:
             self.add(value)
 
-    def hashset_to_list(self):
+    def toList(self):
         lst = []
         if len(self.keyList) == 0:
             return lst
@@ -86,7 +86,7 @@ class MyHashSet(object):
         lst.sort()
         return lst
 
-    def hashset_to_nodelist(self):
+    def toNodeList(self):
         nodelist = []
         if len(self.keyList) == 0:
             return nodelist
@@ -98,21 +98,21 @@ class MyHashSet(object):
                     point = point.next
         return nodelist
 
-    def myfilter(self, function):
+    def filter(self, function):
         lst_res = []
-        for value in self.hashset_to_list:
+        for value in self.toList():
             if function(value) is True:
                 lst_res.append(value)
         return lst_res
 
-    def mymap(self, function):
-        list_src = self.hashset_to_list()
+    def map(self, function):
+        list_src = self.toList()
         for i in range(len(list_src)):
             list_src[i] = function(list_src[i])
-        self.list_to_hashset(list_src)
+        self.fromList(list_src)
         return self
 
-    def myreduce(self, func, init_state):
+    def reduce(self, func, init_state):
         res = init_state
         it = iter(self)
         for i in it:
@@ -120,7 +120,7 @@ class MyHashSet(object):
         return res
 
     def __eq__(self, other) -> bool:
-        if self.hashset_to_list() == other.hashset_to_list():
+        if self.toList() == other.toList():
             return True
         return False
 
@@ -131,10 +131,10 @@ class MyHashSet(object):
         if to_concat is None:
             return self
         elif isinstance(to_concat, MyHashSet):
-            for key in to_concat.hashset_to_list():
+            for key in to_concat.toList():
                 self.add(key)
         return self
 
     def __iter__(self):
-        iter_list = self.hashset_to_nodelist()
+        iter_list = self.toNodeList()
         return iter(iter_list)
