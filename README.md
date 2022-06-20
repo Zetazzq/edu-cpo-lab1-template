@@ -33,6 +33,8 @@ Zuo Ziqian Completed the test_mutable.py
 
 ## Changelog
 
+- 20.06.2022 - 5
+  - Add Type hints and docstrings
 - 10.05.2022 - 4
   - revise the issues in email by Zhou and Zuo
 - 22.04.2022 - 3

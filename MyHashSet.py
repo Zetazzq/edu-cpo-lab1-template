@@ -75,13 +75,13 @@ class MyHashSet(object):
         size = len(self.keyList)
         return size
 
-    def fromList(self, lst) -> None:
+    def fromList(self, lst: list):
         self.__init__()
         for value in lst:
             self.add(value)
 
     def toList(self) -> list:
-        lst = []
+        lst: list = []
         if len(self.keyList) == 0:
             return lst
         for i in range(self.length):
@@ -94,7 +94,7 @@ class MyHashSet(object):
         return lst
 
     def toNodeList(self) -> list:
-        nodelist = []
+        nodelist: list = []
         if len(self.keyList) == 0:
             return nodelist
         for i in range(self.length):
