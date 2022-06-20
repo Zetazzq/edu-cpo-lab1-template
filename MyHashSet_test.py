@@ -1,7 +1,8 @@
 """
-The test function module of Hashset, including the test_init, test_add,
-test_hash, test_remove, test_ismember, test_formList, test_size, test_toList,
-test_filter, test_map, test_reduce, test_iter, test_empty and test_associativity.
+The test function module of Hashset, including the test_init,
+test_add, test_hash, test_remove, test_ismember, test_formList,
+test_size, test_toList, test_filter, test_map, test_reduce,
+test_iter, test_empty and test_associativity.
 """
 import unittest
 from hypothesis import given, strategies
