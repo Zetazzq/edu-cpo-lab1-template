@@ -67,6 +67,7 @@ class MyHashSet(object):
             p.next = None
             self.keyList.remove(key)
             return True
+        return True
 
     def is_member(self, key) -> bool:
         return key in self.keyList
@@ -75,7 +76,7 @@ class MyHashSet(object):
         size = len(self.keyList)
         return size
 
-    def fromList(self, lst: list):
+    def fromList(self, lst):
         self.__init__()
         for value in lst:
             self.add(value)
