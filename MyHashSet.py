@@ -1,3 +1,10 @@
+"""
+The main function module of Hashset, including the init, add,
+remove, is_member, size, formList, toList, toNodeList, map,
+filter, reduce, empty, _eq_, concat and _iter_ function.
+"""
+
+
 class Node(object):
     def __init__(self, key=None, value=None, _next=None):
         self.key = key
@@ -14,11 +21,11 @@ class MyHashSet(object):
         self.length = length
         self.index = 0
 
-    def hash(self, key):
+    def hash(self, key) -> int:
         hash_value = key % self.length
         return hash_value
 
-    def add(self, value):
+    def add(self, value: int) -> None:
         key = value
         hash_value = self.hash(key)
         add_node = Node(key, value)
@@ -39,7 +46,7 @@ class MyHashSet(object):
             self.keyList.append(key)
         return
 
-    def remove(self, key):
+    def remove(self, key: int) -> bool:
         hash_value = self.hash(key)
         if self.data[hash_value] is self.init:
             return False
@@ -64,16 +71,16 @@ class MyHashSet(object):
     def is_member(self, key) -> bool:
         return key in self.keyList
 
-    def size(self):
+    def size(self) -> int:
         size = len(self.keyList)
         return size
 
-    def fromList(self, lst):
+    def fromList(self, lst) -> None:
         self.__init__()
         for value in lst:
             self.add(value)
 
-    def toList(self):
+    def toList(self) -> list:
         lst = []
         if len(self.keyList) == 0:
             return lst
@@ -86,7 +93,7 @@ class MyHashSet(object):
         lst.sort()
         return lst
 
-    def toNodeList(self):
+    def toNodeList(self) -> list:
         nodelist = []
         if len(self.keyList) == 0:
             return nodelist
@@ -98,7 +105,7 @@ class MyHashSet(object):
                     point = point.next
         return nodelist
 
-    def filter(self, function):
+    def filter(self, function) -> list:
         lst_res = []
         for value in self.toList():
             if function(value) is True:
@@ -112,7 +119,7 @@ class MyHashSet(object):
         self.fromList(list_src)
         return self
 
-    def reduce(self, func, init_state):
+    def reduce(self, func, init_state: int) -> int:
         res = init_state
         it = iter(self)
         for i in it:
